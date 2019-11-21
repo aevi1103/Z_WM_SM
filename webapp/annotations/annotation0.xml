@@ -1,0 +1,101 @@
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+	<edmx:Reference Uri="/sap/opu/odata/sap/Z_WM_SHIPMENT_MONITOR_SRV/$metadata">
+		<edmx:Include Alias="Metadata" Namespace="Z_WM_SHIPMENT_MONITOR_SRV"/>
+	</edmx:Reference>
+	<edmx:Reference Uri="https://wiki.scn.sap.com/wiki/download/attachments/448470968/UI.xml?api=v2">
+		<edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+	</edmx:Reference>
+	<edmx:DataServices>
+		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Z_WM_SM.annotations.annotation0.Z_WM_SHIPMENT_MONITOR_SRV">
+			<Annotations Target="Metadata.SHIPMENT">
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>Tplst</PropertyPath>
+						<PropertyPath>Tknum</PropertyPath>
+						<PropertyPath>Dtabf</PropertyPath>
+						<PropertyPath>DeliveryCount</PropertyPath>
+					</Collection>
+				</Annotation>
+				<Annotation Term="UI.LineItem">
+					<Collection>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Tplst"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;TRANSPORT_PLANT}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Tknum"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;SHIPMENT_NUMBER}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Ernam"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;CREATED_BY}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Erdat"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;CREATED_ON}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Erzet"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;TIME}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Dplbg"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_LOAD_START}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Uplbg"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_LOAD_TIME}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Stabf"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;SHIPMENT_COMPLETE}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Dpabf"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_SHIPMENT_COMPLETE_DATE}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Upabf"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_TIME_PROCESS}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Dtabf"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;DATE_SHIPMENT_COMPLETE}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Tpbez"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;DESCRIPTION}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="RegNo"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;CONTAINER_ID}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="DeliveryCount"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;DELIVERY_COUNT}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Deliveries"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;DELIVERIES}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="HuCount"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;HANDLING_UNIT_COUNT}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="HusPicked"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;HANDLING_UNIT_PICKED}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="HusLoaded"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;HANDLING_UNIT_LOADED}"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="LogoName"/>
+						</Record>
+					</Collection>
+				</Annotation>
+			</Annotations>
+		</Schema>
+	</edmx:DataServices>
+</edmx:Edmx>

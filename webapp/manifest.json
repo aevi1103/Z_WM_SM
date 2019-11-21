@@ -1,0 +1,142 @@
+{
+	"_version": "1.8.0",
+	"sap.app": {
+		"id": "com.federalmogul.Z_WM_SM",
+		"type": "application",
+		"i18n": "i18n/i18n.properties",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"sourceTemplate": {
+			"id": "servicecatalog.connectivityComponentForManifest",
+			"version": "0.0.0"
+		},
+		"dataSources": {
+			"Z_WM_SHIPMENT_MONITOR_SRV": {
+				"uri": "/sap/opu/odata/sap/Z_WM_SHIPMENT_MONITOR_SRV/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml",
+					"annotations": [
+						"annotation0"
+					]
+				}
+			},
+			"annotation0": {
+				"type": "ODataAnnotation",
+				"uri": "annotations/annotation0.xml",
+				"settings": {
+					"localUri": "annotations/annotation0.xml"
+				}
+			}
+		}
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		},
+		"supportedThemes": [
+			"sap_hcb",
+			"sap_belize"
+		]
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.federalmogul.Z_WM_SM.view.App",
+			"type": "XML"
+		},
+		"config": {
+			"fullWidth": true
+		},
+		"dependencies": {
+			"minUI5Version": "1.30.0",
+			"libs": {
+				"sap.ui.layout": {},
+				"sap.ui.core": {},
+				"sap.m": {}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.federalmogul.Z_WM_SM.i18n.i18n"
+				}
+			},
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "Z_WM_SHIPMENT_MONITOR_SRV",
+				"preload": true
+			},
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			}
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"async": true,
+				"viewPath": "com.federalmogul.Z_WM_SM.view",
+				"controlAggregation": "pages",
+				"controlId": "idAppControl",
+				"clearControlAggregation": false
+			},
+			"routes": [
+				{
+					"name": "RouteApp",
+					"pattern": "RouteApp",
+					"target": [
+						"TargetApp"
+					]
+				}
+			],
+			"targets": {
+				"TargetApp": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearControlAggregation": false,
+					"viewName": "App"
+				},
+				"Monitor": {
+					"viewType": "XML",
+					"viewName": "Monitor"
+				}
+			}
+		}
+	},
+	"sap.platform.abap": {
+		"uri": "/sap/bc/ui5_ui5/sap/z_wm_sm/webapp",
+		"_version": "1.1.0"
+	}
+}
