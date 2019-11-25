@@ -19,10 +19,6 @@
 				<Annotation Term="UI.LineItem">
 					<Collection>
 						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Tplst"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;TRANSPORT_PLANT}"/>
-						</Record>
-						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Tknum"/>
 							<PropertyValue Property="Label" String="{@i18n&gt;SHIPMENT_NUMBER}"/>
 						</Record>
@@ -40,27 +36,11 @@
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Dplbg"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_LOAD_START}"/>
+							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_LOAD_DATE}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Uplbg"/>
 							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_LOAD_TIME}"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Stabf"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;SHIPMENT_COMPLETE}"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Dpabf"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_SHIPMENT_COMPLETE_DATE}"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Upabf"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;PLAN_TIME_PROCESS}"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Dtabf"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;DATE_SHIPMENT_COMPLETE}"/>
 						</Record>
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="Tpbez"/>
@@ -85,13 +65,6 @@
 						<Record Type="UI.DataField">
 							<PropertyValue Property="Value" Path="HusPicked"/>
 							<PropertyValue Property="Label" String="{@i18n&gt;HANDLING_UNIT_PICKED}"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="HusLoaded"/>
-							<PropertyValue Property="Label" String="{@i18n&gt;HANDLING_UNIT_LOADED}"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="LogoName"/>
 						</Record>
 					</Collection>
 				</Annotation>

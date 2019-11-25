@@ -173,6 +173,45 @@ sap.ui.define([
 			
 			return oSource;
 			
+		},
+		
+		getElapseTimeFromTimeStamp: function(timestamp) {
+			
+			const structure = {
+				year: 31536000,
+				month: 2592000,
+				week: 604800,
+				day: 86400,
+				hour: 3600,
+				minute: 60,
+				second: 1
+			};
+			
+			const now = Date.now(); //in milliseconds
+			const deltaInillisecond = timestamp - now; //in milliseconds
+			let deltaInSecondAbs = Math.abs(deltaInillisecond) / 1000; //convert to second
+			
+		    let res = {
+		    	timestamp,
+		    	now,
+		    	isPastDue: deltaInillisecond < 0 ? true : false,
+		    	deltaInillisecond,
+		    	deltaInSecondAbs
+		    };
+		    
+		    /*
+		    loop through each time structure and convert the absolute value of delta into each time structure.
+		    get the floored value in each loop
+		    convert the result back to millisecond, then subtract that value from the absolute delta to gte the remaining time the repeat process.
+		    */
+		    
+			for(let key in structure) {
+		        res[key] = Math.floor(deltaInSecondAbs / structure[key]); //converts the delta into structure key and get only the floored value 
+		        deltaInSecondAbs -= res[key] * structure[key]; //get the converted value then convert back to millisecond then subtract the difference from the orifinal delta
+		    }
+		    
+		    return res;
+			
 		}
 		
 	});

@@ -1,8 +1,10 @@
 <mvc:View
+	xmlns:core="sap.ui.core" 
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
 	xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+	xmlns:si="sap.suite.ui.commons.statusindicator"
 	xmlns:html="http://www.w3.org/1999/xhtml"
 	controllerName="com.federalmogul.Z_WM_SM.controller.App"
 	height="100%">
@@ -21,11 +23,22 @@
 							<FlexItemData shrinkFactor="0" />
 						</smartFilterBar:layoutData>
 						
+						<smartFilterBar:controlConfiguration>
+							<smartFilterBar:ControlConfiguration key="Tplst">
+								<smartFilterBar:defaultFilterValues>
+									<smartFilterBar:SelectOption low="201S">
+									</smartFilterBar:SelectOption>
+								</smartFilterBar:defaultFilterValues>
+							</smartFilterBar:ControlConfiguration>
+						</smartFilterBar:controlConfiguration>
+						
 					</smartFilterBar:SmartFilterBar>
 					
 					<smartTable:SmartTable 
 						id="smartTable"
 						entitySet="SHIPMENTSet"
+						initialise="onSmartTableInit"
+						beforeRebindTable="onBeforeRebindTbl"
 						smartFilterId="smartFilterBar"
 						tableType="ResponsiveTable"
 						useExportToExcel="true"
@@ -39,13 +52,126 @@
 						demandPopin="false"
 						class="sapUiResponsiveContentPadding"
 						showFullScreenButton="true">
-			
-						<!--<smartTable:layoutData>-->
-						<!--	<FlexItemData growFactor="1" baseSize="0%" />-->
-						<!--</smartTable:layoutData>-->
-						
-						<Table id="innerUi5Table" growing="true">
-							<ColumnListItem highlight="{parts:['HuCount', 'HusLoaded'], formatter:'.formatRowHighlight'}"/>
+
+						<Table id="innerUi5Table" growing="true" growingScrollToLoad="true" growingThreshold="20" updateFinished="onUpdateFinished">
+							
+							<columns>
+								<Column id="LogoName" hAlign="Center" width="60px">
+									<customData>
+										<core:CustomData key="p13nData" value='\{"columnKey": "LogoName", "maxLength": "5","columnIndex":"0", "leadingProperty": "LogoName"}' />
+									</customData>
+									<Text text="{i18n>LOGO}" />
+								</Column>
+								<Column id="Status" hAlign="Begin" width="60px">
+									<customData>
+										<core:CustomData key="p13nData" value='\{"columnKey": "Status", "maxLength": "5","columnIndex":"1", "leadingProperty": "Status"}' />
+									</customData>
+									<Text text="{i18n>STATUS}" />
+								</Column>
+								<Column id="ShipmentStatus" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value='\{"columnKey": "HusLoaded", "maxLength": "5","columnIndex":"2", "leadingProperty": "HusLoaded"}' />
+									</customData>
+									<Text text="{i18n>SHIPMENT_STATUS}" />
+								</Column>
+								<Column id="Erdat" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value='\{"columnKey": "Erdat", "maxLength": "5","columnIndex":"5", "leadingProperty": "Erdat"}' />
+									</customData>
+									<Text text="{i18n>CREATED_ON}" />
+								</Column>
+								<Column id="Dplbg" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value='\{"columnKey": "Dplbg", "maxLength": "5","columnIndex":"7", "leadingProperty": "Dplbg"}' />
+									</customData>
+									<Text text="{i18n>PLAN_LOAD_DATE}" />
+								</Column>
+								<Column id="Uplbg" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value='\{"columnKey": "Uplbg", "maxLength": "5","columnIndex":"8", "leadingProperty": "Uplbg"}' />
+									</customData>
+									<Text text="{i18n>PLAN_LOAD_TIME}" />
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem highlight="{parts:['HuCount', 'HusPicked'], formatter:'.formatRowHighlight'}">
+									<cells>
+
+										<Image
+											height="50px" width="50px"
+											densityAware="false"
+											alt="{ path: 'LogoName' }">
+											<layoutData>
+												<FlexItemData growFactor="1" />
+											</layoutData>
+										</Image>
+										
+									</cells>
+									<cells>
+										
+										<si:StatusIndicator id="indicator11" width="50px" height="50px" value="0">
+											
+											<si:ShapeGroup>
+												<si:Rectangle x="0" y="0" width="50" height="50px" fullAnimationDuration="500" fillingType="Linear"/>
+											</si:ShapeGroup>
+											
+											<si:propertyThresholds>
+												<si:PropertyThreshold fillColor="red" toValue="30"/>
+												<si:PropertyThreshold fillColor="yellow" toValue="60"/>
+												<si:PropertyThreshold fillColor="green" toValue="100"/>
+											</si:propertyThresholds>
+											
+											<si:discreteThresholds>
+												<si:DiscreteThreshold value="5"/>
+												<si:DiscreteThreshold value="10"/>
+												<si:DiscreteThreshold value="15"/>
+												<si:DiscreteThreshold value="30"/>
+												<si:DiscreteThreshold value="50"/>
+												<si:DiscreteThreshold value="70"/>
+												<si:DiscreteThreshold value="90"/>
+												<si:DiscreteThreshold value="100"/>
+											</si:discreteThresholds>
+											
+										</si:StatusIndicator>
+										
+									</cells>
+									<cells>
+										
+										<ObjectStatus
+											text="{ parts:['Dplbg', 'Uplbg'], formatter:'.formatObjectStatusText'}"
+											state="{ parts:['Dplbg', 'Uplbg'], formatter:'.formatObjectStatusState'}"
+											icon="{ parts:['Dplbg', 'Uplbg'], formatter:'.formatObjectStatusIcon'}">
+												<customData>
+													<core:CustomData key="timeToLoad" value="timeToLoad" writeToDom="true" />
+												</customData>
+										</ObjectStatus>
+									
+									</cells>
+									<cells>
+										<Text text="{ 
+											path: 'Erdat',
+											formatter:'.formatter.formatShortDate' 
+										}" />
+									</cells>
+									<cells>
+										<Text text="{ 
+											path: 'Dplbg',
+											formatter:'.formatter.formatShortDate' 
+										}" />
+									</cells>
+									<cells>
+										<Text text="{ 
+											parts:['Dplbg', 'Uplbg'],
+											formatter:'.formatPlannedTime' 
+										}">
+											<customData>
+												<core:CustomData key="Uplbg" value="Uplbg" writeToDom="true" />
+											</customData>
+										</Text>
+									</cells>
+								</ColumnListItem>
+							</items>
+							
 						</Table>
 						
 					</smartTable:SmartTable>
