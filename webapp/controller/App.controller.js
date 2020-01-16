@@ -70,47 +70,17 @@ sap.ui.define([
 			
 			console.log(`table updated at ${this.getDateNow()}`);
 			
-			let statusIndicator = null;
+			// let statusIndicator = null;
 			let timeToLoadObjectStat = null;
 			
-			let huCount = 0;
-			let huPicked = 0;
+			// let huCount = 0;
+			// let huPicked = 0;
 			let plannedDate = null;
 			let plannedTime = null;
 			
 			const rows = oEvent.getSource().getItems();
 			rows.forEach(row => { 
 				row.getCells().forEach(cell => { 
-					
-					//get Hu count and picked ans save to a binding
-					let pathName = "";
-					if (cell.getBindingInfo("text")){
-						pathName = cell.getBindingInfo("text").binding.sPath;
-						if (pathName === "HuCount") {
-							huCount = cell.getText();
-						}
-						if (pathName === "HusPicked") {
-							huPicked = cell.getText();
-						}
-						if (pathName === "Dplbg") {
-							plannedDate = cell.getText();
-						}
-					}
-					
-					//get obj of status indicator
-					if (cell.getMetadata().getName() === "sap.suite.ui.commons.statusindicator.StatusIndicator") {
-						statusIndicator = cell;
-					}
-					
-					//when all bindings are complete update status indicator
-					if (statusIndicator && huCount && huPicked) {
-						const eff = this.formatHuEfficiency(huCount, huPicked);
-						statusIndicator.setValue(eff);
-						//reset
-						statusIndicator = null;
-						huCount = 0;
-						huPicked = 0;
-					}
 					
 					//if obj is an image get its alt value and get image binary
 					if (cell.getMetadata().getName() === "sap.m.Image") {
@@ -121,15 +91,21 @@ sap.ui.define([
 					}
 					
 					//get planned time from custom data key
-					const isPlannedTime = cell.getAggregation("customData").some(aggregation => aggregation.getProperty("key") === "Uplbg");
-					if (isPlannedTime) {
-						plannedTime = cell.getText();
-					}
 					
-					//get object status object based on custom data key
-					const isTimeLoad = cell.getAggregation("customData").some(aggregation => aggregation.getProperty("key") === "timeToLoad");
-					if (isTimeLoad) {
-						timeToLoadObjectStat = cell;
+					const customDataAggregation = cell.getAggregation("customData");
+					if (customDataAggregation) {
+						
+						const isPlannedTime = customDataAggregation.some(aggregation => aggregation.getProperty("key") === "Uplbg");
+						if (isPlannedTime) {
+							plannedTime = cell.getText();
+						}
+						
+						//get object status object based on custom data key
+						const isTimeLoad = customDataAggregation.some(aggregation => aggregation.getProperty("key") === "timeToLoad");
+						if (isTimeLoad) {
+							timeToLoadObjectStat = cell;
+						}
+						
 					}
 					
 					//check if planned date time and ibj stat is defined
@@ -152,14 +128,8 @@ sap.ui.define([
 						timeToLoadObjectStat = null;
 						
 					}
-					
 				});
-				
-				
-				
 			});
-			
-			
 		},
 
 		/*
@@ -184,7 +154,7 @@ sap.ui.define([
 				
 				const shipmentDateTimeStamp = new Date(`${date} ${time}`).getTime();
 				const elapsed = this.getElapseTimeFromTimeStamp(shipmentDateTimeStamp);
-				// console.log(elapsed);
+				console.log('getelapsetime', {date: `${date} ${time}`,shipmentDateTimeStamp, elapsed});
 				return elapsed;
 			}
 			
@@ -198,6 +168,12 @@ sap.ui.define([
 			let result = '';
 			
 			switch (type) {
+				case "y":
+					result = `${value} year`;
+					break;
+				case "o":
+					result = `${value} month`;
+					break;
 				case "d": 
 					result = `${value} day`;
 					break;
@@ -218,9 +194,29 @@ sap.ui.define([
 		
 		formatObjectStatusText: function(plannedDate, plannedTime, isFormatted = false){
 			if (!plannedDate) return "";
-			const { isPastDue, day, hour, minute } = this.getElapsedTime(plannedDate, plannedTime, isFormatted);
+			const { isPastDue, year, month, day, hour, minute } = this.getElapsedTime(plannedDate, plannedTime, isFormatted);
 			const pastDue = isPastDue ? " - Past Due" : "";
-			return `${this.getDateInterval(day, "d")} ${this.getDateInterval(hour, "h")} ${this.getDateInterval(minute, "m")} ${pastDue}`;
+			
+			if (year > 0) {
+				return `${this.getDateInterval(year, "y")} ${this.getDateInterval(month, "o")} ${this.getDateInterval(day, "d")} ${pastDue}`; 
+			}
+			
+			if (month > 0) {
+				return `${this.getDateInterval(month, "o")} ${this.getDateInterval(day, "d")} ${this.getDateInterval(hour, "h")} ${pastDue}`; 
+			}
+			
+			if (day > 0) {
+				return `${this.getDateInterval(day, "d")} ${this.getDateInterval(hour, "h")} ${pastDue}`; 
+			}
+			
+			if (hour > 0) {
+				return `${this.getDateInterval(hour, "h")} ${this.getDateInterval(minute, "m")} ${pastDue}`; 
+			}
+			
+			if (minute > 0) {
+				return `${this.getDateInterval(minute, "m")} ${pastDue}`; 
+			}
+			
 		},
 		
 		formatObjectStatusState: function(plannedDate, plannedTime, isFormatted = false){
@@ -229,11 +225,8 @@ sap.ui.define([
 			const { isPastDue, day, hour } = this.getElapsedTime(plannedDate, plannedTime, isFormatted);
 			
 			if (isPastDue) {
-				
 				return "Error";
-				
 			} else {
-				
 				if (day == 0) {
 					if (hour <= 1) {
 						return "Error";
@@ -241,7 +234,6 @@ sap.ui.define([
 						return "Warning";
 					}
 				}
-				
 				return "Success";
 			}
 			
@@ -253,11 +245,8 @@ sap.ui.define([
 			const { isPastDue, day, hour } = this.getElapsedTime(plannedDate, plannedTime, isFormatted);
 			
 			if (isPastDue) {
-				
 				return "sap-icon://alert";
-				
 			} else {
-				
 				if (day == 0) {
 					if (hour <= 1) {
 						return "sap-icon://alert";
@@ -265,10 +254,8 @@ sap.ui.define([
 						return "sap-icon://message-warning";
 					}
 				}
-				
 				return "";
 			}
-			
 		},
 		
 		formatPlannedTime: function(plannedDate, plannedTime) {
@@ -312,12 +299,7 @@ sap.ui.define([
 								
 				const effPercent = Math.ceil((eff * 100));
 				return effPercent;
-				
 			} 
-			
-			
 		}
-		
-		
 	});
 });
