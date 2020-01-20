@@ -11,15 +11,15 @@ sap.ui.define([
 	
 		onAfterRendering: function(){
 			
-			const model = this.getModel();
-			const path = "/SHIPMENTSet()";
+			// const model = this.getModel();
+			// const path = "/SHIPMENTSet()";
 			
-			model.read(path, {
-				success: function(oData){
-					console.log(path,oData);
-				},
-				filters: [new sap.ui.model.Filter("Tplst", sap.ui.model.FilterOperator.EQ, "201S")] 
-			});
+			// model.read(path, {
+			// 	success: function(oData){
+			// 		console.log(path,oData);
+			// 	},
+			// 	filters: [new sap.ui.model.Filter("Tplst", sap.ui.model.FilterOperator.EQ, "201S")] 
+			// });
 
 		},
 		

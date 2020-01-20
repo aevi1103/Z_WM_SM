@@ -40,7 +40,9 @@
 						<PropertyPath>Tplst</PropertyPath>
 						<PropertyPath>Tknum</PropertyPath>
 						<PropertyPath>Dtabf</PropertyPath>
-						<PropertyPath>DeliveryCount</PropertyPath>
+						<PropertyPath>Dplbg</PropertyPath>
+						<PropertyPath>Erdat</PropertyPath>
+						<PropertyPath >DeliveryCount</PropertyPath>
 					</Collection>
 				</Annotation>
 				<Annotation Term="UI.LineItem">

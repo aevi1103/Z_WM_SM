@@ -25,12 +25,23 @@
 						</smartFilterBar:layoutData>
 						
 						<smartFilterBar:controlConfiguration>
+							
 							<smartFilterBar:ControlConfiguration key="Tplst">
 								<smartFilterBar:defaultFilterValues>
 									<smartFilterBar:SelectOption low="201S">
 									</smartFilterBar:SelectOption>
 								</smartFilterBar:defaultFilterValues>
 							</smartFilterBar:ControlConfiguration>
+							
+							<smartFilterBar:ControlConfiguration key="Dtabf" conditionType="sap.ui.comp.config.condition.DateRangeType" visibleInAdvancedArea="true">
+							</smartFilterBar:ControlConfiguration>
+							
+							<smartFilterBar:ControlConfiguration key="Dplbg" conditionType="sap.ui.comp.config.condition.DateRangeType" visibleInAdvancedArea="true">
+							</smartFilterBar:ControlConfiguration>
+							
+							<smartFilterBar:ControlConfiguration key="Erdat" conditionType="sap.ui.comp.config.condition.DateRangeType" visibleInAdvancedArea="true">
+							</smartFilterBar:ControlConfiguration>
+							
 						</smartFilterBar:controlConfiguration>
 						
 					</smartFilterBar:SmartFilterBar>
@@ -44,7 +55,7 @@
 						tableType="ResponsiveTable"
 						useExportToExcel="true"
 						beforeExport="onBeforeExport"
-						useVariantManagement="false"
+						useVariantManagement="true"
 						useTablePersonalisation="true"
 						header="Shipments"
 						showRowCount="true"
@@ -71,31 +82,27 @@
 									<Text text="{i18n>STATUS}" />
 								</Column>
 								
-								<!--<Column id="Status" hAlign="Begin" width="60px">-->
-								<!--	<customData>-->
-								<!--		<core:CustomData key="p13nData" value='\{"columnKey": "Status", "maxLength": "5","columnIndex":"1", "leadingProperty": "Status"}' />-->
-								<!--	</customData>-->
-								<!--	<Text text="{i18n>STATUS}" />-->
-								<!--</Column>-->
-								
 								<Column id="ShipmentStatus" hAlign="Begin">
 									<customData>
 										<core:CustomData key="p13nData" value='\{"columnKey": "HusLoaded", "maxLength": "5","columnIndex":"2", "leadingProperty": "HusLoaded"}' />
 									</customData>
 									<Text text="{i18n>SHIPMENT_STATUS}" />
 								</Column>
+								
 								<Column id="Erdat" hAlign="Begin">
 									<customData>
 										<core:CustomData key="p13nData" value='\{"columnKey": "Erdat", "maxLength": "5","columnIndex":"5", "leadingProperty": "Erdat"}' />
 									</customData>
 									<Text text="{i18n>CREATED_ON}" />
 								</Column>
+								
 								<Column id="Dplbg" hAlign="Begin">
 									<customData>
 										<core:CustomData key="p13nData" value='\{"columnKey": "Dplbg", "maxLength": "5","columnIndex":"7", "leadingProperty": "Dplbg"}' />
 									</customData>
 									<Text text="{i18n>PLAN_LOAD_DATE}" />
 								</Column>
+								
 								<Column id="Uplbg" hAlign="Begin">
 									<customData>
 										<core:CustomData key="p13nData" value='\{"columnKey": "Uplbg", "maxLength": "5","columnIndex":"8", "leadingProperty": "Uplbg"}' />
@@ -104,6 +111,7 @@
 								</Column>
 								
 							</columns>
+							
 							<items>
 								<ColumnListItem highlight="{parts:['HuCount', 'HusPicked'], formatter:'.formatRowHighlight'}">
 									<cells>
@@ -120,31 +128,6 @@
 										<mc:SmartBulletMicroChart id="ItemsSmartBulletMicroChart"
 											entitySet="SHIPMENTSet" width="100%" >
 										</mc:SmartBulletMicroChart>
-										
-										<!--<si:StatusIndicator id="indicator11" width="50px" height="50px" value="0">-->
-											
-										<!--	<si:ShapeGroup>-->
-										<!--		<si:Rectangle x="0" y="0" width="50" height="50px" fullAnimationDuration="500" fillingType="Linear"/>-->
-										<!--	</si:ShapeGroup>-->
-											
-										<!--	<si:propertyThresholds>-->
-										<!--		<si:PropertyThreshold fillColor="red" toValue="30"/>-->
-										<!--		<si:PropertyThreshold fillColor="yellow" toValue="60"/>-->
-										<!--		<si:PropertyThreshold fillColor="green" toValue="100"/>-->
-										<!--	</si:propertyThresholds>-->
-											
-										<!--	<si:discreteThresholds>-->
-										<!--		<si:DiscreteThreshold value="5"/>-->
-										<!--		<si:DiscreteThreshold value="10"/>-->
-										<!--		<si:DiscreteThreshold value="15"/>-->
-										<!--		<si:DiscreteThreshold value="30"/>-->
-										<!--		<si:DiscreteThreshold value="50"/>-->
-										<!--		<si:DiscreteThreshold value="70"/>-->
-										<!--		<si:DiscreteThreshold value="90"/>-->
-										<!--		<si:DiscreteThreshold value="100"/>-->
-										<!--	</si:discreteThresholds>-->
-											
-										<!--</si:StatusIndicator>-->
 										
 										<ObjectStatus
 											text="{ parts:['Dplbg', 'Uplbg'], formatter:'.formatObjectStatusText'}"
@@ -173,9 +156,7 @@
 												<core:CustomData key="Uplbg" value="Uplbg" writeToDom="true" />
 											</customData>
 										</Text>
-										
-										
-										
+
 									</cells>
 
 								</ColumnListItem>
