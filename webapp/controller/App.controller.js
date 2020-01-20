@@ -174,6 +174,9 @@ sap.ui.define([
 				case "o":
 					result = `${value} month`;
 					break;
+				case "w":
+					result = `${value} week`;
+					break;
 				case "d": 
 					result = `${value} day`;
 					break;
@@ -194,27 +197,44 @@ sap.ui.define([
 		
 		formatObjectStatusText: function(plannedDate, plannedTime, isFormatted = false){
 			if (!plannedDate) return "";
-			const { isPastDue, year, month, day, hour, minute } = this.getElapsedTime(plannedDate, plannedTime, isFormatted);
+			const { isPastDue, year, month, week, day, hour, minute } = this.getElapsedTime(plannedDate, plannedTime, isFormatted);
 			const pastDue = isPastDue ? " - Past Due" : "";
 			
 			if (year > 0) {
-				return `${this.getDateInterval(year, "y")} ${this.getDateInterval(month, "o")} ${this.getDateInterval(day, "d")} ${pastDue}`; 
+				return `${year > 0 ? this.getDateInterval(year, "y") : ""} 
+						${month > 0 ? this.getDateInterval(month, "o") : ""} 
+						${week > 0 ? this.getDateInterval(week, "w") : ""} 
+						${day > 0 ? this.getDateInterval(day, "d") : ""} 
+						${pastDue}`; 
 			}
 			
 			if (month > 0) {
-				return `${this.getDateInterval(month, "o")} ${this.getDateInterval(day, "d")} ${this.getDateInterval(hour, "h")} ${pastDue}`; 
+				return `${month > 0 ? this.getDateInterval(month, "o") : ""} 
+						${week > 0 ? this.getDateInterval(week, "w") : ""} 
+						${day > 0 ? this.getDateInterval(day, "d") : ""} 
+						${pastDue}`; 
+			}
+			
+			if (week > 0) {
+				return `${week > 0 ? this.getDateInterval(week, "w") : ""} 
+						${day > 0 ? this.getDateInterval(day, "d") : ""} 
+						${pastDue}`; 
 			}
 			
 			if (day > 0) {
-				return `${this.getDateInterval(day, "d")} ${this.getDateInterval(hour, "h")} ${pastDue}`; 
+				return `${day > 0 ? this.getDateInterval(day, "d") : ""} 
+						${hour > 0 ? this.getDateInterval(hour, "h") : ""} 
+						${pastDue}`; 
 			}
 			
 			if (hour > 0) {
-				return `${this.getDateInterval(hour, "h")} ${this.getDateInterval(minute, "m")} ${pastDue}`; 
+				return `${hour > 0 ? this.getDateInterval(hour, "h") : ""} 
+						${minute > 0 ? this.getDateInterval(minute, "m") : ""} 
+						${pastDue}`; 
 			}
 			
 			if (minute > 0) {
-				return `${this.getDateInterval(minute, "m")} ${pastDue}`; 
+				return `${minute > 0 ? this.getDateInterval(minute, "m") : ""}  ${pastDue}`; 
 			}
 			
 		},
